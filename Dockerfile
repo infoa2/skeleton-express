@@ -1,4 +1,4 @@
-FROM node:12.14
+FROM node:12.14-alpine
 
 ENV WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
