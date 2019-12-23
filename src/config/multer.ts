@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import multer, { Options } from 'multer';
 import { extname } from 'path';
-import { createRandomBytes } from '@vagnercardoso/nodesdk';
+import { createRandomBytes } from '@infoa2/nodesdk';
 import configApp from './app';
 
 export function MulterAutomaticTmpUploads() {

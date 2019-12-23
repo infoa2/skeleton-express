@@ -5,7 +5,7 @@ import http, { Server as HttpServer } from 'http';
 import express, { Application } from 'express';
 import helmet from 'helmet';
 import * as Sentry from '@sentry/node';
-import { Database, View } from '@vagnercardoso/nodesdk';
+import { Database, View } from '@infoa2/nodesdk';
 import { Environment } from 'nunjucks';
 import { Sequelize } from 'sequelize';
 

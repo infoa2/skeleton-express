@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
-import { validateCpf, validateCnpj, onlyNumber } from '@vagnercardoso/nodesdk';
+import { validateCpf, validateCnpj, onlyNumber } from '@infoa2/nodesdk';
 
 Yup.string.prototype.cpf = function cpf(message?: string) {
   message = message || '${path} must be valid cpf.';
