@@ -1,0 +1,13 @@
+.DS_Store
+/**/.idea/
+/**/.env
+/**/node_modules/
+/**/package.lock
+/**/yarn-error.log
+/**/tmp/uploads/*
+!/**/tmp/uploads/.gitkeep
+/**/dist/*
+/**/tmp/mysql/*
+!/**/tmp/mysql/.gitkeep
+/**/tsconfig.tsbuildinfo
+/**/__tests__/**/database.sqlite
