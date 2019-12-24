@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
-    "start": "yarn build && NODE_ENV=production pm2 startOrRestart ./ecosystem.config.js",
+    "start": "yarn build && NODE_ENV=production pm2-docker startOrRestart ./ecosystem.config.js",
     "prebuild": "rm -rf ./dist",
     "build": "NODE_ENV=production tsc",
     "test": "NODE_ENV=testing jest"

@@ -1,39 +1,39 @@
-FROM node:12.14
+FROM node:12.14-alpine
+
+# set environment
+ENV USER=node 
+ENV WORKDIR=/home/node/app
 
 # set workdir application
-ENV WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
 
 # create directory app and permission
 RUN mkdir -p ${WORKDIR}
-RUN chown -R node:node ${WORKDIR}
+RUN chown -R ${USER}:${USER} ${WORKDIR}
 
 # update system and install dependencies
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get autoremove
+RUN apk add --update alpine-sdk python
 
 # install global yarn dependencies
-RUN yarn global add pm2
-RUN yarn global add typescript
-RUN yarn global add nodemon
+RUN yarn global add pm2 typescript nodemon
 
 # copy package.json
 COPY package.json .
+COPY yarn.lock .
 
 # install node dependencies
-RUN yarn install --force
+RUN yarn install --silent --pure-lockfile && yarn cache clean
 
 # copy all project files to working directory
 COPY . .
-COPY --chown=node:node . .
-RUN chown -R node:1000 ${WORKDIR}
+COPY --chown=${USER}:${USER} . .
+RUN chown -R ${USER}:1000 ${WORKDIR}
 
 # set user
-USER node
+USER ${USER}
 
 # expose application port
 EXPOSE ${PORT}
 
-# start dev application
-CMD ["yarn", "dev"]
+# start application
+CMD ["yarn", "start"]
