@@ -1,5 +1,6 @@
-FROM node:12.14-alpine
+FROM node:12.14
 
+# set workdir application
 ENV WORKDIR=/home/node/app
 WORKDIR ${WORKDIR}
 
@@ -7,20 +8,21 @@ WORKDIR ${WORKDIR}
 RUN mkdir -p ${WORKDIR}
 RUN chown -R node:node ${WORKDIR}
 
-# udpate system
-RUN apk update --no-cache
+# update system and install dependencies
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get autoremove
 
 # install global yarn dependencies
 RUN yarn global add pm2
 RUN yarn global add typescript
 RUN yarn global add nodemon
 
-# copy package.json and yarn.lock
+# copy package.json
 COPY package.json .
-COPY yarn.lock .
 
-# install yarn dependencies
-RUN yarn install
+# install node dependencies
+RUN yarn install --force
 
 # copy all project files to working directory
 COPY . .
@@ -30,8 +32,8 @@ RUN chown -R node:1000 ${WORKDIR}
 # set user
 USER node
 
-# export application port
+# expose application port
 EXPOSE ${PORT}
 
-# start application
+# start dev application
 CMD ["yarn", "dev"]

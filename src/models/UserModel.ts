@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { Model, Sequelize, DataTypes } from 'sequelize';
-import PasswordService from '../services/PasswordService';
+import { Password } from '@infoa2/nodesdk';
 
 export default class UserModel extends Model {
   public name!: string;
@@ -23,7 +23,7 @@ export default class UserModel extends Model {
 
     this.addHook('beforeSave', async (user: UserModel) => {
       if (user.password) {
-        user.password_hash = await PasswordService.hash(user.password);
+        user.password_hash = await Password.bcrypt.create(user.password);
       }
     });
 
@@ -35,6 +35,6 @@ export default class UserModel extends Model {
   // static findByEmail(email) {...}
 
   checkPassword(password: string) {
-    return PasswordService.verify(password, this.password_hash);
+    return Password.bcrypt.verify(password, this.password_hash);
   }
 }

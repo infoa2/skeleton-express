@@ -2,7 +2,7 @@
 import { Response } from 'express';
 
 class ApiController {
-  index(_: any, res: Response) {
+  async index(_: any, res: Response) {
     return res.success({
       date: new Date(),
       company: 'Infoa2',
