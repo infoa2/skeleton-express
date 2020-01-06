@@ -7,7 +7,9 @@
 /**/tmp/uploads/*
 !/**/tmp/uploads/.gitkeep
 /**/dist/*
-/**/tmp/mysql/*
-!/**/tmp/mysql/.gitkeep
+/**/tmp/redis/*
+/**/tmp/postgres/*
+!/**/tmp/redis/.gitkeep
+!/**/tmp/postgres/.gitkeep
 /**/tsconfig.tsbuildinfo
 /**/__tests__/**/database.sqlite

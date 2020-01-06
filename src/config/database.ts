@@ -1,7 +1,7 @@
 const charset = process.env.DB_ENCODING || 'utf8';
 
 module.exports = {
-  dialect: process.env.DB_DIALECT || 'mysql',
+  dialect: process.env.DB_DIALECT || 'postgres',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   username: process.env.DB_USERNAME,

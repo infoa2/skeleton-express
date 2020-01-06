@@ -7,7 +7,6 @@ export default {
   apiKey: process.env.API_KEY || 'api:secret',
 
   onlyApi: true,
-  jwtExpiresIn: '7d',
 
   path: {
     root: rootPath,

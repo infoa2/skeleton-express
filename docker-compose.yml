@@ -6,43 +6,41 @@ services:
     restart: always
     tty: true
     networks:
-      - mysql
       - redis
+      - postgres
     depends_on:
-      - mysql
       - redis
+      - postgres
     ports:
       - '3333:3333'
     volumes:
-      - '.:/home/node/app'
+      - .:/home/node/app
       - /home/node/app/node_modules
-    environment:
-      NODE_ENV: development
-      START_COMMAND: yarn dev
 
-  mysql:
-    image: mysql:5.7
+  postgres:
+    image: postgres:alpine
     restart: always
     volumes:
-      - './tmp/mysql:/var/lib/mysql'
+      - ./tmp/postgres:/var/lib/postgresql/data
     networks:
-      - mysql
+      - postgres
     ports:
-      - '3306:3306'
+      - '5432:5432'
     environment:
-      - MYSQL_PASSWORD=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=development
+      - POSTGRES_DB=dbname
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=dbpasswd
 
   redis:
     image: redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - ./tmp/redis:/data
     networks:
       - redis
     ports:
       - '6379:6379'
 
 networks:
-  mysql:
-    driver: bridge
+  postgres:
   redis:
-    driver: bridge
