@@ -6,7 +6,7 @@
     "jest": true
   },
   "extends": ["airbnb-base", "prettier", "plugin:import/typescript"],
-  "plugins": ["prettier", "node"],
+  "plugins": ["prettier", "node", "eslint-plugin-import-helpers"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -35,6 +35,20 @@
         "ts": "never",
         "tsx": "never"
       }
-   ]
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        // example configuration
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          "/^@shared/",
+          "/^~//",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
   }
 }
