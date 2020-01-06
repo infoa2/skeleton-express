@@ -3,5 +3,5 @@
   "execMap": {
     "js": "sucrase-node ./src/server.ts"
   },
-  "ext": "njk,html,js,ts,css,scss"
+  "ext": "twig,njk,html,js,ts,css,scss"
 }

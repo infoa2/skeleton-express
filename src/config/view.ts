@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+
 import configApp from './app';
 
 export default {

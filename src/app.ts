@@ -1,68 +1,82 @@
 /* eslint-disable no-unused-vars */
 import './env';
 import 'express-async-errors';
-import http, { Server as HttpServer } from 'http';
+import { Database, View } from '@infoa2/nodesdk';
+import * as Sentry from '@sentry/node';
 import express, { Application } from 'express';
 import helmet from 'helmet';
-import * as Sentry from '@sentry/node';
-import { Database, View } from '@infoa2/nodesdk';
+import http, { Server as HttpServer } from 'http';
+// import { Mongoose } from 'mongoose';
 import { Environment } from 'nunjucks';
+import { resolve } from 'path';
 import { Sequelize } from 'sequelize';
+// import socketIo, { Server as SocketServer } from 'socket.io';
 
-import configView from './config/view';
-import configSentry from './config/sentry';
 // @ts-ignore
 import configDatabase from './config/database';
-
+import configSentry from './config/sentry';
+import configView from './config/view';
 import * as middlewares from './middlewares';
 import * as models from './models';
 
 export interface IApp {
   app: Application;
   server: HttpServer;
-  nunjucks: Environment;
-  sequelize: Sequelize;
+  // socketIo: SocketServer;
+  nunjucks?: Environment;
+  // mongoose?: Mongoose;
+  sequelize?: Sequelize;
 }
 
 class App implements IApp {
   public app: Application;
   public server: HttpServer;
-  // @ts-ignore
-  public nunjucks: Environment;
-  // @ts-ignore
-  public sequelize: Sequelize;
+  // public socketIo: SocketServer;
+  public nunjucks?: Environment;
+  // public mongoose?: Mongoose;
+  public sequelize?: Sequelize;
 
   public constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
+    // this.socketIo = socketIo(this.server);
 
-    this.sentry();
-    this.view();
-    this.database();
-    this.middlewares();
+    this.initSentry();
+    this.initNunjucks();
+    // this.initMongoose();
+    this.initSequelize();
+    this.initMiddlewares();
   }
 
-  private sentry(): void {
+  private initSentry(): void {
     if (process.env.NODE_ENV === 'production') {
       Sentry.init(configSentry);
     }
   }
 
-  private view(): void {
-    this.nunjucks = View.nunjucks(configView.path, {
+  private initNunjucks(): void {
+    this.nunjucks = View.nunjucks(resolve(configView.path, 'template'), {
       ...configView.nujunks,
       express: this.app,
     });
   }
 
-  private database(): void {
+  // private async initMongoose(): Promise<void> {
+  //   const { MONGO_URL } = process.env;
+
+  //   if (MONGO_URL) {
+  //     this.mongoose = await Database.mongoose(MONGO_URL);
+  //   }
+  // }
+
+  private async initSequelize(): Promise<void> {
     this.sequelize = Database.sequelize({
       ...configDatabase,
       models: Object.values(models),
     });
   }
 
-  private middlewares(): void {
+  private initMiddlewares(): void {
     const allMiddlewares = [
       helmet(),
       express.json(),

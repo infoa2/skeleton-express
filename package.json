@@ -13,14 +13,13 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "start": "yarn build && NODE_ENV=production pm2-docker startOrRestart ./ecosystem.config.js",
-    "prebuild": "rm -rf ./dist",
+    "prebuild": "rm -rf ./dist && rm tsconfig.tsbuildinfo",
     "build": "NODE_ENV=production tsc",
-    "test": "NODE_ENV=testing jest"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
-    "@infoa2/nodesdk": "^1.0.2",
+    "@infoa2/nodesdk": "^1.0.3",
     "@sentry/node": "^5.10.2",
-    "argon2": "^0.25.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -29,7 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
-    "mysql2": "^2.0.2",
+    "mysql2": "^2.1.0",
     "nodemailer": "^6.4.2",
     "nunjucks": "^3.2.0",
     "sequelize": "^5.21.3",
@@ -37,7 +36,6 @@
     "yup": "^0.28.0"
   },
   "devDependencies": {
-    "@types/argon2": "^0.15.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.2",
     "@types/helmet": "^0.0.45",
@@ -64,7 +62,8 @@
     "pm2": "^4.2.1",
     "prettier": "^1.19.1",
     "sequelize-cli": "^5.5.1",
-    "sucrase": "^3.10.1",
+    "sucrase": "^3.12.0",
+    "supertest": "^4.0.2",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.4"
   }

@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { Request, Response, NextFunction, RequestHandler } from 'express';
+
 import configCors from '../config/cors';
 
 export default function CorsMiddleware(): RequestHandler {

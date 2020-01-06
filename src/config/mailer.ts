@@ -1,5 +1,5 @@
-import { resolve } from 'path';
 import { Mailer } from '@infoa2/nodesdk';
+import { resolve } from 'path';
 
 import configView from './view';
 
@@ -13,8 +13,8 @@ export default new Mailer({
   },
   options: {
     from: {
-      name: process.env.MAIL_FROM_NAME || 'Infoa 2',
-      address: process.env.MAIL_FROM_MAIL || 'noreply@infoa2.com.br',
+      name: process.env.MAIL_FROM_NAME || 'From Name',
+      address: process.env.MAIL_FROM_MAIL || 'noreply@localhost.local',
     },
   },
   nunjucks: {

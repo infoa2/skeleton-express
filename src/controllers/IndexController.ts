@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Response } from 'express';
 
-class ApiController {
+class IndexController {
   async index(_: any, res: Response) {
     return res.success({
       date: new Date(),
@@ -16,4 +16,4 @@ class ApiController {
   }
 }
 
-export default new ApiController();
+export default new IndexController();
