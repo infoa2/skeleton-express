@@ -11,18 +11,19 @@ WORKDIR ${WORKDIR}
 RUN mkdir -p ${WORKDIR}
 RUN chown -R ${USER}:${USER} ${WORKDIR}
 
-# update system and install dependencies
-RUN apk add --update alpine-sdk python
-
 # install global yarn dependencies
-RUN yarn global add pm2 typescript nodemon
+# RUN yarn global add pm2 typescript nodemon
 
 # copy package.json
 COPY package.json .
 COPY yarn.lock .
 
-# install node dependencies
-RUN yarn install --silent --pure-lockfile && yarn cache clean
+# update system and install dependencies
+RUN apk add --update alpine-sdk python vips-tools vips-dev fftw-dev gcc g++ make libc6-compat && \
+    yarn install --silent --pure-lockfile && \
+    yarn cache clean && \
+    apk del alpine-sdk python vips-dev fftw-dev gcc g++ make && \
+    rm -rf /var/cache/apk/*
 
 # copy all project files to working directory
 COPY . .
@@ -32,8 +33,5 @@ RUN chown -R ${USER}:1000 ${WORKDIR}
 # set user
 USER ${USER}
 
-# expose application port
-EXPOSE ${PORT}
-
 # start application
-CMD ["yarn", "start"]
+CMD ${START_COMMAND}
